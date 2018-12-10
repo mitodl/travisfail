@@ -16,14 +16,19 @@ cd path/to/some/project/repo
 travisfail --help
 
 # Get categorized output for a failed build job that executed
-# on the currently checked-out branch
+# on the currently checked-out branch. The script will try to determine 
+# the repo from the current directory and the PR number from the current
+# branch.
 travisfail
+
 # Get categorized output for a failed build job that executed
 # on the branch for PR #123
 travisfail --pr 123
+
 # Get categorized output for a failed build job that executed
 # on the branch for PR #123 in the 'someproject' repo
 travisfail --pr 123 --repo someproject 
+
 # Get raw output for a failed build job 
 # (don't attempt to categorize; takes same arguments as commands above)
 travisfail --raw
