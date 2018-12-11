@@ -9,6 +9,9 @@ After cloning this repo, you can install the CLI with pip:
 pip install -e path/to/travisfail
 ```
 
+You'll need to set two environment variables before running commands: `GITHUB_USERNAME` and `GITHUB_TOKEN`
+(a [Github API token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/))
+
 ### Running commands
 
 ```bash
