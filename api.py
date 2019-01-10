@@ -108,14 +108,26 @@ class PyTestErrorFinder(ErrorFinder):
     start_indicator = r'=* FAILURES =*{ANSISPACE}_+\s+[a-zA-Z]+'.format(
         ANSISPACE=ANSI_SPACE_PATTERN
     )
-    # end_indicator = r'=+ \d+ failed'
     end_indicator = r'{ANSISPACE}\-+ coverage'.format(
         ANSISPACE=ANSI_SPACE_PATTERN
     )
     include_start = True
 
 
-python_error_finders = [PyTestErrorFinder, PyLintErrorFinder]
+class PyBlackErrorFinder(ErrorFinder):
+    error_title = "Python Black Formatter"
+    start_indicator = r'{ANSISPACE}would reformat [^\s]+\.py'
+    end_indicator = r'\d+ file[s]? would be reformatted{ANSISPACE}'.format(
+        ANSISPACE=ANSI_SPACE_PATTERN
+    )
+    include_start = True
+
+
+python_error_finders = [
+    PyTestErrorFinder,
+    PyLintErrorFinder,
+    PyBlackErrorFinder,
+]
 js_error_finders = [
     JsTestErrorFinder,
     NpmFmtErrorFinder,
