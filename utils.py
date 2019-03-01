@@ -43,7 +43,7 @@ def get_repo_name():
     )
     if not output:
         raise Exception("Could not get the remote repo URL. Current directory might not be a git repository.")
-    return re.search(r'/(.*)\.git$', output).group(1)
+    return re.search(r'/([^/]*)\.git$', output).group(1)
 
 
 def get_current_branch():

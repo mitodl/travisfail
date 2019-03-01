@@ -1,5 +1,6 @@
 import sys
 import click
+import json
 
 import api
 from utils import get_repo_name, get_pr_number_from_current_branch
@@ -15,7 +16,8 @@ LONG_DIVIDER = DIVIDER * 3
 @click.option('-p', '--pr', type=int, help='PR number')
 @click.option('-f', '--filepath', type=click.Path(exists=True), help='File path of a job log')
 @click.option('--raw', is_flag=True, help='Get raw job log contents only')
-def cli(repo, pr, filepath, raw):
+@click.option('--gh-statuses', is_flag=True, help='Show Github PR statuses response only (for debugging purposes)')
+def cli(repo, pr, filepath, raw, gh_statuses):
     if filepath:
         failure_report = api.compile_failure_report_from_file(filepath)
         print_failure_reports([failure_report], filepath)
@@ -31,6 +33,8 @@ def cli(repo, pr, filepath, raw):
 
     if raw:
         output_raw_failed_build_log(repo, pr)
+    elif gh_statuses:
+        click.echo(json.dumps(api.get_pr_statuses(repo, pr)))
     else:
         failure_reports = api.compile_pr_failure_reports(repo, pr)
         print_failure_reports(failure_reports, '{} - PR #{}'.format(repo, pr))
