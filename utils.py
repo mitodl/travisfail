@@ -33,16 +33,15 @@ def current_dir_name():
 
 
 def get_repo_name():
-    output = (
+    output_lines = (
         subprocess
         .Popen("git config --get remote.origin.url", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         .stdout
-        .readlines()[0]
-        .decode()
-        .strip()
+        .readlines()
     )
-    if not output:
+    if not output_lines or len(output_lines) == 0:
         raise Exception("Could not get the remote repo URL. Current directory might not be a git repository.")
+    output = output_lines[0].decode().strip()
     return re.search(r'/([^/]*)\.git$', output).group(1)
 
 

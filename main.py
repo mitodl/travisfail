@@ -27,7 +27,7 @@ def cli(repo, pr, filepath, raw, gh_statuses):
         repo = get_repo_name()
     if not pr:
         pr = get_pr_number_from_current_branch(repo)
-    if not repo and pr:
+    if not filepath and not all([repo, pr]):
         click.echo('Need to pass in --repo and --pr, or --filepath', err=True)
         return
 
